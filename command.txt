@@ -195,3 +195,5 @@ hint: See the 'Note about fast-forwards' in 'git push --help' for details.
 		git push origin master
 
 Если у вас есть права на запись в удаленный репозиторий, команда git push должна успешно выполниться, и ваши изменения будут отправлены на GitHub.
+
+через Visual Studio Code (VS Code) работать проще 
