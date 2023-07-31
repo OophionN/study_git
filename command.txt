@@ -159,10 +159,12 @@ $ ls -la .ssh/ # вывели список созданных ключей
 
 		$ ssh -T git@github.com
 		
+		
 Можно вызвать не только полный лог, но и сокращённый — это делается командой git log --oneline.
 выход с помощью q
-		
-		
+
+
+
 Статусы untracked/tracked, staged и modified
 untracked (англ. «неотслеживаемый»)
 staged (англ. «подготовленный») также называют index (англ. «каталог») или cache (англ. «кеш»),
@@ -218,7 +220,6 @@ HEAD -- это голова.
 
 Дополнительно можно указывать текст на стрелке. Например, так: A -- "text" --> B.
 
-
 Добавление файлов в комит и корректировка сообщения 
 
 $ git add common.css
@@ -244,6 +245,7 @@ a31fa24 Добавить главную страницу и стили
 Нажмите Enter.
 Для запуска учебника на русском языке достаточно выполнить команду vimtutor ru. Без ru запустится английская версия.
 
+
 Откаты на прошлые состояния
 
 Выполнить unstage изменений — git restore --staged <file>
@@ -267,6 +269,7 @@ no changes added to commit (use "git add" and/or "git commit -a")
 # файл example.txt из staged вернулся обратно в untracked 
 
 Чтобы «сбросить» все файлы из staged обратно в untracked/modified, можно воспользоваться командой git restore --staged .: она сбросит всю текущую папку (.).
+
 
 «Откатить» коммит — git reset --hard <commit hash>
 
@@ -294,6 +297,12 @@ $ git status
 On branch main
 nothing to commit, working tree clean 
 
+копирование репозитория 
+
+git clone git@github.com:yandex-praktikum/git-branch-case.git
+
+
+
 памятка  
 Команда git restore --staged <file> переведёт файл из staged обратно в modified или untracked.
 Команда git reset --hard <commit hash> «откатит» историю до коммита с хешем <hash>. Более поздние коммиты потеряются!
@@ -315,6 +324,7 @@ index c2a33f8..e77226b 100644
 \ No newline at end of file
 
 
+
 Самое важное git diff выводит в конце:
 красный цвет строки никого нет значит, что эта строка была удалена;
 зелёный цвет строки Мышка-норушка значит, что она была добавлена.
@@ -332,6 +342,7 @@ index c2a33f8..e77226b 100644
 
 Команда git diff сравнит последнюю закоммиченную версию файла с той, что находится в состоянии modified.
 Команда git diff --staged покажет изменения в staged-файлах относительно последних закоммиченных версий.
+
 
 дополение файла
 
@@ -386,3 +397,63 @@ git reset --hard b576d89 (от англ. reset, «сброс», «обнулен
 git diff (от англ. difference, «отличие», «разница») — покажи изменения в «рабочей зоне», то есть в modified-файлах;
 git diff a9928ab 11bada1 — выведи разницу между двумя коммитами;
 git diff --staged — покажи изменения, которые добавлены в staged-файлах.
+
+
+
+получение информации о ветках 
+
+		git branch
+
+Создание веток
+
+		git branch <название_ветки>
+		
+Переключиться на другую ветку — 
+		
+		git checkout
+		git checkout -b bugfix/fix-branch # создали ветку и сразу на неё переключились
+		
+Сравнить ветки — 
+
+		git diff <название_ветки1> <название_ветки2>
+		$ git diff main 2ea56ab # вывод будет такой же, как при использовании git diff main feature/diff
+		
+git diff может сравнивать ветки по их названиям. 
+Например, команда git diff main feature/my-feature выведет разницу между основной веткой и веткой feature/my-feature.
+
+Git поддерживает суффикс навигации ~. С его помощью можно сослаться на предыдущие коммиты. 
+
+Например, если вы находитесь в ветке main и хотите вывести разницу между тем коммитом, который был три коммита назад, и текущим, нужно выполнить git diff main~3 main.
+
+
+Объединяем и удаляем ветки
+
+Выполнить слияние — 
+			git merge <название_ветки>
+			
+пример конфликта 
+
+PC_Maks@F15 MINGW64 ~/dev/git-merge-case (main)
+$ git merge change-one
+Merge made by the 'ort' strategy.
+ file.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+PC_Maks@F15 MINGW64 ~/dev/git-merge-case (main)
+$ git merge change-two
+Auto-merging file.txt
+CONFLICT (content): Merge conflict in file.txt
+Automatic merge failed; fix conflicts and then commit the result.
+
+
+
+
+удаление веток на гитхабе
+
+$ git push --delete origin OophionN-patch-2
+To github.com:dataMasterskaya/DreamParser.git
+ - [deleted]         OophionN-patch-2
+
+
+Отслеживание ветки
+$ git branch --set-upstream-to=origin/OophionN
